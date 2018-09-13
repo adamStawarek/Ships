@@ -10,37 +10,33 @@ namespace SimpleGame
 {
     public abstract class Player
     {
-        public static bool IsGameOver;              
+        public static bool IsGameOver;
         public Players PlayerType { get; set; }
         public ObservableCollection<Ship> Ships { get; }
-        public List<int> AlreadyAttackedFields { get; }
+        public ObservableCollection<int> AlreadyAttackedFields { get; }
         public event EventHandler Lost;
         public ImageSource Flag { get; set; }
 
         protected Player(Players playerType)
         {
             PlayerType = playerType;
-            AlreadyAttackedFields=new List<int>();
-            Ships=new ObservableCollection<Ship>();
-           
-            foreach (var ship in Ships)
-            {
-                ship.Destroyed += CheckIfGameOver;
-            }
+            AlreadyAttackedFields = new ObservableCollection<int>();
+            Ships = new ObservableCollection<Ship>();
+            AlreadyAttackedFields.CollectionChanged += CheckIfGameOver;
         }
 
         public void AddShips(IEnumerable<Ship> ships)
-        {            
-            ships.ToList().ForEach(s=>Ships.Add(s));
+        {
+            ships.ToList().ForEach(s => Ships.Add(s));
         }
 
-        private void CheckIfGameOver(object sender, EventArgs e)
-        {
+        public void CheckIfGameOver(object sender, EventArgs e)
+        {            
             if (!Ships.All(s => s.IsDestroyed)) return;
             MessageBox.Show($"{this.PlayerType} has lost!!!");
             IsGameOver = true;
             OnLost();
-        }      
+        }
 
         public void OnLost()
         {
@@ -61,7 +57,7 @@ namespace SimpleGame
         }
 
         public bool Attack(Player enemy, int field)
-        {            
+        {
             var ship = enemy.GetShipByField(field);
             ship?.UnderAttack(field);
             AlreadyAttackedFields.Add(field);

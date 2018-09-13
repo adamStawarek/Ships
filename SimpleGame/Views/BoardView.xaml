@@ -31,7 +31,7 @@
                        FontSize="20" FontWeight="Bold"
                        Command="{Binding NewGame}"></Button>
                 <StackPanel DockPanel.Dock="Bottom">
-                    <Image Margin="15,25,15,15" Width="50" Source="{Binding WaitingBoxImage}" >
+                    <Image Margin="15,40,15,40" Width="50" Source="{Binding WaitingBoxImage}" >
                         <Image.RenderTransform>
                             <RotateTransform CenterX="12" CenterY="12" />
                         </Image.RenderTransform>
@@ -74,8 +74,8 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border BorderBrush="Black" BorderThickness="1">
-                            <DockPanel Background="#D5E3EF" ToolTip="{Binding Key}">
-                                <Image Source="{Binding Value}" Width="140"></Image>
+                            <DockPanel Background="#D5E3EF">
+                                <Image Source="{Binding Value}" Stretch="Fill"></Image>
                                 <DockPanel.Style>
                                     <Style TargetType="DockPanel">
                                         <Style.Triggers>
@@ -107,9 +107,7 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border BorderBrush="Black" BorderThickness="1">
-                            <DockPanel Background="#D5E3EF">
-                                <Image Source="{Binding Value}" Width="140"></Image>
-                            </DockPanel>
+                            <Image Source="{Binding Value}" Stretch="Fill" ></Image>
                         </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

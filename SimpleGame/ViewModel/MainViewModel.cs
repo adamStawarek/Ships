@@ -20,43 +20,9 @@ namespace SimpleGame.ViewModel
                 _currentViewModel = value;
                 RaisePropertyChanged();
             }
-        }
-
-        private int _width;
-        public int Width
-        {
-            get => _width;
-            set
-            {
-                if (_width == value)
-                {
-                    return;
-                }
-
-                _width = value;
-                RaisePropertyChanged();
-            }
-        }
-        private int _height;
-        public int Height
-        {
-            get => _height;
-            set
-            {
-                if (_height == value)
-                {
-                    return;
-                }
-
-                _height = value;
-                RaisePropertyChanged();
-            }
-        }
-
+        }     
         public MainViewModel()
-        {
-            Width = 300;
-            Height = 600;
+        {                   
             CurrentViewModel=GameSettingsViewModel.GetInstance();            
         }
     }

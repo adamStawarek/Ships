@@ -10,6 +10,6 @@ namespace SimpleGame
         public MainWindow()
         {
             InitializeComponent();
-        }
+        }      
     }
 }

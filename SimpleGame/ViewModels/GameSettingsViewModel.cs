@@ -140,8 +140,9 @@ namespace SimpleGame.ViewModels
         private void StartGame()
         {
            ViewModelLocator vm=new ViewModelLocator();
-           vm.Main.Width = 1400; 
-           vm.Main.CurrentViewModel=new BoardViewModel(Host,Port);
+            Application.Current.MainWindow.Width = 1500;
+            Application.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+           vm.Main.CurrentViewModel=new BoardViewModel(Host,Port);        
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System.Windows;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using SimpleGame.ViewModel;
 
@@ -18,6 +19,11 @@ namespace SimpleGame.ViewModels
         {
             ViewModelLocator vm=new ViewModelLocator();
             vm.Main.CurrentViewModel=new GameSettingsViewModel();
+            if (Application.Current.MainWindow != null)
+            {
+                Application.Current.MainWindow.Width = 400;
+                Application.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            }
         }
     }
 }

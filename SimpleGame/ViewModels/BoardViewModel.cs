@@ -219,7 +219,7 @@ namespace SimpleGame.ViewModels
                     foreach (var field in Fields)
                     {
                         if (field.Key == shipField)
-                            field.Value = Ship.BlackShip;
+                            field.Value = ship.GetShipImage();
                     }
                 }
             }
@@ -259,8 +259,7 @@ namespace SimpleGame.ViewModels
             WaitingBoxMessage = CurrentPlayer.PlayerType+" is the winner";
             WaitingBoxImage = CurrentPlayer.Flag;           
             IsPlayerTurn = false;
-            IsAnimatedWaitingImage = false;
-            MessageBox.Show("You win");
+            IsAnimatedWaitingImage = false;          
         }
 
         private void EnemyWin(object sender, EventArgs e)
@@ -268,8 +267,7 @@ namespace SimpleGame.ViewModels
             WaitingBoxMessage = _enemyPlayer.PlayerType + " is the winner";
             WaitingBoxImage = _enemyPlayer.Flag;          
             IsPlayerTurn = false;
-            IsAnimatedWaitingImage = false;
-            MessageBox.Show("You lose");
+            IsAnimatedWaitingImage = false;      
         }
 
         private void InformServerToStartNewGame()
