@@ -125,7 +125,12 @@ namespace SimpleGame.ViewModels
                         "Assign_player;Player2;" + Player2Ships + ";" + Player1Ships);                   
                     break;
                 case "NewGame":
-                    _server.Broadcast(e.MessageString);
+                    Player1Ships = JsonConvert.SerializeObject(ShipHelpers.GetRandomSetOfShips(),
+                        Formatting.Indented);
+                    Player2Ships = JsonConvert.SerializeObject(ShipHelpers.GetRandomSetOfShips(),
+                        Formatting.Indented);
+                    _server.Broadcast(e.MessageString+";"+Player1Ships+
+                                      ";"+Player2Ships);
                     break;
                 case "Ready":
                     _server.Broadcast(e.MessageString);

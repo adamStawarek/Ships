@@ -154,10 +154,7 @@ namespace SimpleGame.ViewModels
         {
             var msg = e.MessageString.Split(';');
             switch (msg.Length)
-            {
-                case 1 when msg[0] == "NewGame":
-                    Application.Current.Dispatcher.BeginInvoke(new Action(StartNewGame));
-                    break;
+            {              
                 case 1 when msg[0] == "Ready":
                     Application.Current.Dispatcher.BeginInvoke(new Action(ReadyToPlay));
                     break;
@@ -166,6 +163,10 @@ namespace SimpleGame.ViewModels
                     break;
                 case 1 when msg[0] == "Server_disconnected":
                     Application.Current.Dispatcher.BeginInvoke(new Action(ServerDisconnected));
+                    break;
+                case 3 when msg[0] == "NewGame":
+                    Application.Current.Dispatcher.BeginInvoke(
+                        new Action(() => StartNewGame(msg[1], msg[2])));
                     break;
                 case 4 when msg[0] == "Assign_player":
                     Application.Current.Dispatcher.BeginInvoke(msg[1] == "Player1"
@@ -249,8 +250,8 @@ namespace SimpleGame.ViewModels
 
             CurrentPlayer.AddShips(currentPlayerShips);
             _enemyPlayer.AddShips(enemyPlayerShips);
-            _enemyPlayer.Lost += PlayerWin;
-            _currentPlayer.Lost += EnemyWin;
+            _enemyPlayer.Win += PlayerWin;
+            _currentPlayer.Win += EnemyWin;
 
             if(player==Players.Player2)
                 _client.Write("Ready");
@@ -274,26 +275,53 @@ namespace SimpleGame.ViewModels
 
         private void InformServerToStartNewGame()
         {        
-            _client.Write("NewGame");
+            if(CurrentPlayer!=null&&_enemyPlayer!=null)
+                _client.Write("NewGame");
         }
 
-        private void StartNewGame()
-        {           
-           // for (var i = 0; i < 9; i++)
-           //     Fields[i].Value = new BitmapImage();
-           // Player.IsGameOver = false;
-           // Player.FieldsTakenByBothPlayers.Clear();
-           // CurrentPlayer.EmptyFields();
-           // _enemyPlayer.EmptyFields();
-           //ReadyToPlay();
+        private void StartNewGame(string currentPlayerShipsJson, string enemyPlayerShipsJson)
+        {
+            Fields.Clear();
+            EnemyFields.Clear();
+            for (int i = 1; i <= 64; i++)
+            {
+                Fields.Add(i, new BitmapImage());
+                EnemyFields.Add(i, new BitmapImage());
+            }
+
+            
+            Player.IsGameOver = false;
+
+            JsonConverter[] converters = { new ShipConverter() };
+            var player1Ships = JsonConvert.DeserializeObject<List<Ship>>(currentPlayerShipsJson, new JsonSerializerSettings() { Converters = converters });
+            var player2Ships = JsonConvert.DeserializeObject<List<Ship>>(enemyPlayerShipsJson, new JsonSerializerSettings() { Converters = converters });
+
+            if (CurrentPlayer.PlayerType == Players.Player1)
+            {
+                CurrentPlayer=new FirstPlayer(Players.Player1);
+                _enemyPlayer=new SecondPlayer(Players.Player2);
+                CurrentPlayer.AddShips(player1Ships);
+                _enemyPlayer.AddShips(player2Ships);
+            }
+            else
+            {
+                CurrentPlayer = new SecondPlayer(Players.Player2);
+                _enemyPlayer = new FirstPlayer(Players.Player1);
+                CurrentPlayer.AddShips(player2Ships);
+                _enemyPlayer.AddShips(player1Ships);
+                IsAnimatedWaitingImage = true;
+            }
+            _enemyPlayer.Win += PlayerWin;
+            _currentPlayer.Win += EnemyWin;
+            ReadyToPlay();
         }
 
         private void EnemyTurn(int index)
         {
+            if(Player.IsGameOver) return;
             int? attackedShipLength = _enemyPlayer.Attack(CurrentPlayer, index);
             Fields.FirstOrDefault(f => f.Key == index).Value =
-                attackedShipLength!=null ? Ship.GetDestroyedShipImage((int)attackedShipLength) : Ship.MissedShoot;
-            _enemyPlayer.Attack(CurrentPlayer, index);           
+                attackedShipLength!=null ? Ship.GetDestroyedShipImage((int)attackedShipLength) : Ship.MissedShoot;          
             SwitchWaitingBoxPlayer();
         }
 

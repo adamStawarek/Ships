@@ -15,7 +15,7 @@ namespace SimpleGame.GameObjects.PlayerObjects
         public Players PlayerType { get; set; }
         public ObservableCollection<Ship> Ships { get; }
         public ObservableCollection<int> AlreadyAttackedFields { get; }
-        public event EventHandler Lost;
+        public event EventHandler Win;
         public ImageSource Flag { get; set; }
 
         protected Player(Players playerType)
@@ -23,7 +23,6 @@ namespace SimpleGame.GameObjects.PlayerObjects
             PlayerType = playerType;
             AlreadyAttackedFields = new ObservableCollection<int>();
             Ships = new ObservableCollection<Ship>();
-            AlreadyAttackedFields.CollectionChanged += CheckIfGameOver;
         }
 
         public void AddShips(IEnumerable<Ship> ships)
@@ -31,17 +30,17 @@ namespace SimpleGame.GameObjects.PlayerObjects
             ships.ToList().ForEach(s => Ships.Add(s));
         }
 
-        public void CheckIfGameOver(object sender, EventArgs e)
+        public void CheckIfGameOver(Player player)
         {            
-            if (!Ships.All(s => s.IsDestroyed)) return;
-            MessageBox.Show($"{this.PlayerType} has lost!!!");
+            if (!player.Ships.All(s => s.IsDestroyed)) return;
+            MessageBox.Show($"{player.PlayerType} has lost!!!");
             IsGameOver = true;
-            OnLost();
+            OnWin();
         }
 
-        public void OnLost()
+        public void OnWin()
         {
-            var handler = Lost;
+            var handler = Win;
             handler?.Invoke(this, EventArgs.Empty);
         }
 
@@ -62,6 +61,7 @@ namespace SimpleGame.GameObjects.PlayerObjects
             var ship = enemy.GetShipByField(field);
             ship?.UnderAttack(field);
             AlreadyAttackedFields.Add(field);
+            CheckIfGameOver(enemy);
             return ship?.ShipLength;
         }
     }
