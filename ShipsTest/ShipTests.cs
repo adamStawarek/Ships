@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using SimpleGame;
+using SimpleGame.GameObjects.ShipObjects;
 using SimpleGame.Helpers;
 
 namespace ShipsTest

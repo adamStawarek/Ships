@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace SimpleGame
+﻿namespace SimpleGame.GameObjects.ShipObjects
 {
     public class TinyShip : Ship
     {

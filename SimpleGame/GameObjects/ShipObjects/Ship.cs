@@ -8,13 +8,11 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace SimpleGame
+namespace SimpleGame.GameObjects.ShipObjects
 {
     public abstract class Ship
     {
-        public static readonly ImageSource BlackShip=new BitmapImage(new Uri(@"\Images\ship.png",UriKind.Relative));
-        public static readonly ImageSource RedShip = new BitmapImage(new Uri(@"\Images\red_ship.png", UriKind.Relative));
-        public static readonly ImageSource BlueShip = new BitmapImage(new Uri(@"\Images\blue_ship.png", UriKind.Relative));
+        public static readonly ImageSource MissedShoot = new BitmapImage(new Uri(@"\Images\MissedShoot.png", UriKind.Relative));
 
         public static int GetRow(int fieldNumber,int gridWidth)
         {
@@ -25,6 +23,11 @@ namespace SimpleGame
         {
             var val = fieldNumber % gridWidth;
             return val==0?gridWidth:val;
+        }
+
+        public static ImageSource GetDestroyedShipImage(int length)
+        {
+            return new BitmapImage(new Uri(@"\Images\ship_"+length+"_destroyed.png", UriKind.Relative));
         }
 
         public bool IsDestroyed { get; set; }

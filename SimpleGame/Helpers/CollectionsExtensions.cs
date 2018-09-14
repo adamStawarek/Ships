@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SimpleGame.GameObjects.ShipObjects;
+using SimpleGame.GameObjects.ShipsObjects;
 
-namespace SimpleGame
+namespace SimpleGame.Helpers
 {
     public static class CollectionsExtensions
     {
@@ -20,21 +20,6 @@ namespace SimpleGame
             }
 
             return ships;
-        }
-
-        public static bool ContainsCollection<T>(this IEnumerable<T> A, IEnumerable<T> B)
-        {
-            var tmp=new List<T>(A);
-            foreach (var element in B)
-            {
-                if (tmp.Contains(element))
-                    tmp.Remove(element);
-                else
-                {
-                    return false;
-                }
-            }
-            return true;
         }
 
         public static bool ContainsAny<T>(this IEnumerable<T> A, IEnumerable<T> B)

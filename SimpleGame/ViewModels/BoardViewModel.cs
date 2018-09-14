@@ -11,6 +11,8 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Newtonsoft.Json;
+using SimpleGame.GameObjects.PlayerObjects;
+using SimpleGame.GameObjects.ShipObjects;
 using SimpleGame.ViewModel;
 
 namespace SimpleGame.ViewModels
@@ -288,8 +290,9 @@ namespace SimpleGame.ViewModels
 
         private void EnemyTurn(int index)
         {
+            int? attackedShipLength = _enemyPlayer.Attack(CurrentPlayer, index);
             Fields.FirstOrDefault(f => f.Key == index).Value =
-                _enemyPlayer.Attack(CurrentPlayer, index) ? Ship.RedShip : Ship.BlueShip;
+                attackedShipLength!=null ? Ship.GetDestroyedShipImage((int)attackedShipLength) : Ship.MissedShoot;
             _enemyPlayer.Attack(CurrentPlayer, index);           
             SwitchWaitingBoxPlayer();
         }
@@ -298,8 +301,9 @@ namespace SimpleGame.ViewModels
         {
             var index = Convert.ToInt32(p); 
             if (Player.IsGameOver||CurrentPlayer.AlreadyAttackedFields.Contains(index)) return;
+            int? attackedShipLength = CurrentPlayer.Attack(_enemyPlayer, index);
             EnemyFields.FirstOrDefault(f => f.Key == index).Value =
-                CurrentPlayer.Attack(_enemyPlayer,index)?Ship.RedShip:Ship.BlueShip;
+               attackedShipLength!=null?Ship.GetDestroyedShipImage((int)attackedShipLength):Ship.MissedShoot;
             _client.Write(_enemyPlayer.PlayerType + ";" + index);
             SwitchWaitingBoxPlayer();
         }

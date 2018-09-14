@@ -5,8 +5,9 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using SimpleGame.Annotations;
+using SimpleGame.GameObjects.ShipObjects;
 
-namespace SimpleGame
+namespace SimpleGame.GameObjects.PlayerObjects
 {
     public abstract class Player
     {
@@ -56,12 +57,12 @@ namespace SimpleGame
             return null;
         }
 
-        public bool Attack(Player enemy, int field)
+        public int? Attack(Player enemy, int field)
         {
             var ship = enemy.GetShipByField(field);
             ship?.UnderAttack(field);
             AlreadyAttackedFields.Add(field);
-            return ship != null;
+            return ship?.ShipLength;
         }
     }
 }

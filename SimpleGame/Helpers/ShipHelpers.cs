@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SimpleGame.GameObjects.ShipObjects;
 
 namespace SimpleGame.Helpers
 {

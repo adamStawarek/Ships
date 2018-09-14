@@ -78,22 +78,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="FirstPlayer.cs" />
+    <Compile Include="GameObjects\PlayerObjects\FirstPlayer.cs" />
     <Compile Include="Helpers\ShipConverter.cs" />
     <Compile Include="Helpers\ShipHelpers.cs" />
     <Compile Include="Helpers\BoolToVisibilityConverter.cs" />
     <Compile Include="Helpers\ObservablePairCollection.cs" />
     <Compile Include="Helpers\Pair.cs" />
-    <Compile Include="LargeShip.cs" />
-    <Compile Include="MediumShip.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="Players.cs" />
+    <Compile Include="GameObjects\ShipObjects\LargeShip.cs" />
+    <Compile Include="GameObjects\ShipObjects\MediumShip.cs" />
+    <Compile Include="GameObjects\PlayerObjects\Player.cs" />
+    <Compile Include="GameObjects\PlayerObjects\Players.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="SecondPlayer.cs" />
-    <Compile Include="Ship.cs" />
+    <Compile Include="GameObjects\PlayerObjects\SecondPlayer.cs" />
+    <Compile Include="GameObjects\ShipObjects\Ship.cs" />
     <Compile Include="CollectionsExtensions.cs" />
-    <Compile Include="SmallShip.cs" />
-    <Compile Include="TinyShip.cs" />
+    <Compile Include="GameObjects\ShipObjects\SmallShip.cs" />
+    <Compile Include="GameObjects\ShipObjects\TinyShip.cs" />
     <Compile Include="ViewModels\ModalBoxViewModel.cs" />
     <Compile Include="ViewModels\GameSettingsViewModel.cs" />
     <Compile Include="Views\ModalBoxView.xaml.cs">
@@ -165,17 +165,25 @@
     <Resource Include="Images\russia.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\ship.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\blue_ship.png" />
-    <Resource Include="Images\red_ship.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\ship_2.png" />
     <Resource Include="Images\ship_3.png" />
     <Resource Include="Images\ship_4.png" />
     <Resource Include="Images\ship_6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ship_2_destroyed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ship_3_destroyed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ship_4_destroyed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ship_6_destroyed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MissedShoot.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -3,6 +3,7 @@ using SimpleGame;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SimpleGame.GameObjects.ShipObjects;
 using Assert = NUnit.Framework.Assert;
 
 namespace ShipsTest

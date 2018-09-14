@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Media.Imaging;
 
-namespace SimpleGame
+namespace SimpleGame.GameObjects.PlayerObjects
 {
     public class SecondPlayer : Player
     {
